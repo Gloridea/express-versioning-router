@@ -7,10 +7,6 @@
     "email": "gloridea@gloridea.net"
   },
   "license": "MIT",
-  "dependencies": {
-    "express": "~4.12.2",
-    "path-to-regexp": "^1.1.1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/strongloop/express"
@@ -22,6 +18,11 @@
     "version",
     "router"
   ],
+  "dependencies": {
+    "express": "~4.12.2",
+    "methods": "^1.1.1",
+    "path-to-regexp": "^1.1.1"
+  },
   "devDependencies": {
     "supertest": "^1.0.1"
   },
