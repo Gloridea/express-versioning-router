@@ -9,7 +9,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/strongloop/express"
+    "url": "https://github.com/Gloridea/express-versioning-router"
   },
   "keywords": [
     "express",
@@ -19,7 +19,6 @@
     "router"
   ],
   "dependencies": {
-    "express": "~4.12.2",
     "methods": "^1.1.1",
     "path-to-regexp": "^1.1.1"
   },
