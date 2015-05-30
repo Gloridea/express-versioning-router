@@ -1,7 +1,7 @@
 {
   "name": "express-versioning-router",
   "description": "express router wrapper for elegant versioning REST style APIs",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": {
     "name": "Gloridea",
     "email": "gloridea@gloridea.net"
@@ -25,6 +25,7 @@
   "devDependencies": {
     "supertest": "^1.0.1"
   },
+  "main": "lib/versioning-router.js",
   "scripts": {
     "test": "mocha"
   }
