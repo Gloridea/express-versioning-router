@@ -1,7 +1,7 @@
 {
   "name": "express-versioning-router",
   "description": "express router wrapper for elegant versioning REST style APIs",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "author": {
     "name": "Gloridea",
     "email": "gloridea@gloridea.net"

@@ -110,6 +110,22 @@ describe("VersioningRouter", function() {
         });
     });
 
+    it("should treat version to 1 if not defined", function (done) {
+        // Given
+        router.get('/hello', function(req, res, next) {
+            res.send("hello-get-1");
+        });
+
+        // When
+        var test = request(app).get('/v2/foo/hello')
+
+        // Then
+        test.end(function (err, res) {
+            assert.equal(res.text, 'hello-get-1');
+            done();
+        });
+    })
+
     function countedDone(done, count) {
         var n = 0;
         return function() {
