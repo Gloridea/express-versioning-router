@@ -124,7 +124,47 @@ describe("VersioningRouter", function() {
             assert.equal(res.text, 'hello-get-1');
             done();
         });
-    })
+    });
+
+    it("should redirect to original route", function(done) {
+        // Given
+        var app = express();
+        var path = "";
+
+        // When
+        app.use(vrouter.redirector);
+        app.use(function(req, res, next) {
+            path = req.url;
+            next();
+        });
+        var test = request(app).get('/v1/foo/hello');
+
+        // Then
+        test.end(function(err, res) {
+            assert.equal(path, '/foo/hello');
+            done();
+        });
+    });
+
+    it("should bypass if no version in path", function(done) {
+        // Given
+        var app = express();
+        var path = "";
+
+        // When
+        app.use(vrouter.redirector);
+        app.use(function(req, res, next) {
+            path = req.url;
+            next();
+        });
+        var test = request(app).get('/foo/hello');
+
+        // Then
+        test.end(function(err, res) {
+            assert.equal(path, '/foo/hello');
+            done();
+        });
+    });
 
     function countedDone(done, count) {
         var n = 0;
