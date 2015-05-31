@@ -126,46 +126,6 @@ describe("VersioningRouter", function() {
         });
     });
 
-    it("should redirect to original route", function(done) {
-        // Given
-        var app = express();
-        var path = "";
-
-        // When
-        app.use(vrouter.redirector);
-        app.use(function(req, res, next) {
-            path = req.url;
-            next();
-        });
-        var test = request(app).get('/v1/foo/hello');
-
-        // Then
-        test.end(function(err, res) {
-            assert.equal(path, '/foo/hello');
-            done();
-        });
-    });
-
-    it("should bypass if no version in path", function(done) {
-        // Given
-        var app = express();
-        var path = "";
-
-        // When
-        app.use(vrouter.redirector);
-        app.use(function(req, res, next) {
-            path = req.url;
-            next();
-        });
-        var test = request(app).get('/foo/hello');
-
-        // Then
-        test.end(function(err, res) {
-            assert.equal(path, '/foo/hello');
-            done();
-        });
-    });
-
     function countedDone(done, count) {
         var n = 0;
         return function() {
@@ -175,4 +135,61 @@ describe("VersioningRouter", function() {
             }
         }
     }
+});
+
+describe("VersioningRouger.redirector", function () {
+    beforeEach(function() {
+        app = express();
+    });
+
+    function catchUrl(req, res, next) {
+        catchUrl.passedUrl = req.url;
+        next();
+    }
+
+    it("should redirect to original route", function(done) {
+        // Given
+        // When
+        app.use(vrouter.redirector);
+        app.use(catchUrl);
+        var test = request(app).get('/v1/foo/hello');
+
+        // Then
+        test.end(function(err, res) {
+            assert.equal(catchUrl.passedUrl, '/foo/hello');
+            done();
+        });
+    });
+
+    it("should bypass if no version in url", function(done) {
+        // Given
+        var path = "";
+
+        // When
+        app.use(vrouter.redirector);
+        app.use(catchUrl);
+        var test = request(app).get('/foo/hello');
+
+        // Then
+        test.end(function(err, res) {
+            assert.equal(catchUrl.passedUrl, '/foo/hello');
+            done();
+        });
+    });
+
+    it("should replace first version string only", function (done) {
+        // Given
+        var path = "";
+
+        // When
+        app.use(vrouter.redirector);
+        app.use(catchUrl);
+        var test = request(app).get('/foo/v123/bar/v345/moo');
+
+        // Then
+        test.end(function(err, res) {
+            assert.equal(catchUrl.passedUrl, '/foo/bar/v345/moo');
+            done();
+        });
+    });
 });
